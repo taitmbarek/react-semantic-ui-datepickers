@@ -93,3 +93,14 @@ export type RangeDatePickerProps = DayzedProps & {
   onChange: (event: React.SyntheticEvent, dates: Date[] | null) => void;
   selected: Date[];
 };
+
+export type PickerProps = Pick<
+  SemanticDatepickerProps,
+  'date' | 'filterDate' | 'pointing'
+> &
+  Locale & {
+    dayzedProps: DayzedProps;
+    isRangeInput: boolean;
+    onChange: DayzedProps['onDateSelected'];
+    selected: DayzedProps['selected'];
+  };

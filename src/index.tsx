@@ -10,10 +10,9 @@ import {
   parseOnBlur,
   pick,
 } from './utils';
-import { BasicDatePicker, RangeDatePicker } from './pickers';
-import { Locale, SemanticDatepickerProps } from './types';
-import Calendar from './components/calendar';
+import { DayzedProps, Locale, SemanticDatepickerProps } from './types';
 import Input from './components/input';
+import Picker from './components/picker';
 
 const style: React.CSSProperties = {
   display: 'inline-block',
@@ -121,7 +120,7 @@ class SemanticDatepicker extends React.Component<
   }
 
   get dayzedProps() {
-    return omit(semanticInputProps, this.props);
+    return omit(semanticInputProps, this.props) as DayzedProps;
   }
 
   get inputProps() {
@@ -168,10 +167,6 @@ class SemanticDatepicker extends React.Component<
   }
 
   state = this.initialState;
-
-  Component: React.ElementType = this.isRangeInput
-    ? RangeDatePicker
-    : BasicDatePicker;
 
   resetState = event => {
     const { keepOpenOnClear, onChange } = this.props;
@@ -384,24 +379,16 @@ class SemanticDatepicker extends React.Component<
           value={typedValue || selectedDateFormatted}
         />
         {isVisible && (
-          <this.Component
-            {...this.dayzedProps}
-            monthsToDisplay={this.isRangeInput ? 2 : 1}
+          <Picker
+            {...locale}
+            isRangeInput={this.isRangeInput}
+            dayzedProps={this.dayzedProps}
             onChange={this.onDateSelected}
+            filterDate={filterDate}
+            pointing={pointing}
             selected={selectedDate}
             date={this.date}
-          >
-            {props => (
-              <Calendar
-                {...this.dayzedProps}
-                {...props}
-                {...locale}
-                filterDate={filterDate}
-                pointing={pointing}
-                weekdays={this.weekdays}
-              />
-            )}
-          </this.Component>
+          />
         )}
       </div>
     );
