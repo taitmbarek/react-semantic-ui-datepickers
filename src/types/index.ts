@@ -96,11 +96,10 @@ export type RangeDatePickerProps = DayzedProps & {
 
 export type PickerProps = Pick<
   SemanticDatepickerProps,
-  'date' | 'filterDate' | 'pointing'
+  'date' | 'filterDate' | 'pointing' | 'type'
 > &
   Locale & {
     dayzedProps: DayzedProps;
-    isRangeInput: boolean;
     onChange: DayzedProps['onDateSelected'];
     selected: DayzedProps['selected'];
   };

@@ -364,7 +364,7 @@ class SemanticDatepicker extends React.Component<
       selectedDateFormatted,
       typedValue,
     } = this.state;
-    const { clearable, pointing, filterDate, readOnly } = this.props;
+    const { clearable, pointing, filterDate, readOnly, type } = this.props;
 
     return (
       <div className="field" style={style} ref={this.el}>
@@ -381,13 +381,13 @@ class SemanticDatepicker extends React.Component<
         {isVisible && (
           <Picker
             {...locale}
-            isRangeInput={this.isRangeInput}
             dayzedProps={this.dayzedProps}
             onChange={this.onDateSelected}
             filterDate={filterDate}
             pointing={pointing}
             selected={selectedDate}
             date={this.date}
+            type={type}
           />
         )}
       </div>
