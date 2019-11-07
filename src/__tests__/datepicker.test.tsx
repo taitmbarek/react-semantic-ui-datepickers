@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForDomChange } from '@testing-library/react';
 import { SemanticDatepickerProps } from '../types';
 import localeEn from '../locales/en-US.json';
 import localePt from '../locales/pt-BR.json';
@@ -11,10 +11,12 @@ const setup = (props?: Partial<SemanticDatepickerProps>) => {
 
   return {
     ...options,
-    openDatePicker: () => {
+    openDatePicker: async () => {
       const icon = options.getByTestId('datepicker-icon');
 
       fireEvent.click(icon);
+
+      await waitForDomChange();
     },
     rerender: (newProps?: Partial<SemanticDatepickerProps>) =>
       options.rerender(
@@ -31,7 +33,7 @@ describe('Basic datepicker', () => {
   it('updates the locale if the prop changes', async () => {
     const { getByTestId, openDatePicker, rerender } = setup();
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayButton = getByTestId('datepicker-today-button');
 
@@ -45,7 +47,7 @@ describe('Basic datepicker', () => {
   it('fallbacks the locale to `en-US` when it has invalid value', async () => {
     const { getByTestId, openDatePicker, rerender } = setup();
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayButton = getByTestId('datepicker-today-button');
 
@@ -62,7 +64,7 @@ describe('Basic datepicker', () => {
     const today = getShortDate(new Date()) as string;
     const { getByTestId, openDatePicker } = setup({ onChange });
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayCell = getByTestId(RegExp(today));
 
@@ -86,7 +88,7 @@ describe('Range datepicker', () => {
   it('updates the locale if the prop changes', async () => {
     const { getByTestId, openDatePicker, rerender } = setup({ type: 'range' });
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayButton = getByTestId('datepicker-today-button');
 
@@ -100,7 +102,7 @@ describe('Range datepicker', () => {
   it('fallbacks the locale to `en-US` when it has invalid value', async () => {
     const { getByTestId, openDatePicker, rerender } = setup({ type: 'range' });
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayButton = getByTestId('datepicker-today-button');
 
@@ -124,7 +126,7 @@ describe('Range datepicker', () => {
       type: 'range',
     });
 
-    openDatePicker();
+    await openDatePicker();
 
     const todayCell = getByTestId(RegExp(today));
     const tomorrowCell = getByTestId(RegExp(tomorrow));
