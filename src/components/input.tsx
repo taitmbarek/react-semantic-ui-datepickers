@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, FormInputProps } from 'semantic-ui-react';
+import { Form, FormInputProps } from 'semantic-ui-react';
 
 type InputProps = FormInputProps & {
   isClearIconVisible: boolean;
@@ -16,21 +16,13 @@ const CustomInput = ({
   <Form.Input
     data-testid="datepicker-input"
     {...rest}
-    icon={
-      <Icon
-        data-testid="datepicker-icon"
-        link
-        name={isClearIconVisible ? 'close' : icon}
-        onClick={isClearIconVisible ? onClear : onClick}
-      />
-    }
     onClick={onClick}
     value={value}
   />
 );
 
 CustomInput.defaultProps = {
-  icon: 'calendar',
+  icon: null,
 };
 
 export default CustomInput;

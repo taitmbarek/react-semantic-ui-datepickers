@@ -50,6 +50,7 @@ const semanticInputProps = [
   'size',
   'transparent',
   'readOnly',
+  'style',
 ];
 
 type SemanticDatepickerState = {
